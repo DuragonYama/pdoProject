@@ -5,7 +5,7 @@
     if (isset($_POST['submitButton'])) {
         $User->loginUser($_POST['email'], $_POST['password']);
         $notification = "<div class='notification success'>Login Successful!</div>";
-        header("refresh:3; url = index.php");
+        header("refresh:3; url = calendar.php");
     }
 ?>
 <!DOCTYPE html>
