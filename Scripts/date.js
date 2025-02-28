@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
             calendar.appendChild(emptyDiv);
         }
 
-        // Add the days of the month
         for (let day = 1; day <= daysInMonth; day++) {
             const dateDiv = document.createElement("div");
             dateDiv.classList.add("date");
@@ -45,7 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderCalendar();
 
-    // Previous month button
     previousMonth.onclick = function() {
         if (currentMonth === 0) {
             currentMonth = 11;
@@ -56,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
         renderCalendar(); 
     };
 
-    // Next month button
     nextMonth.onclick = function() {
         if (currentMonth === 11) {
             currentMonth = 0;
@@ -66,4 +63,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         renderCalendar();
     };
+
+    let days = document.querySelectorAll(".date")
+    
+    days.forEach(day => {
+        day.onclick = function() {
+            let pressedDay = day.textContent;
+            location.replace(`../Website/calendarDay.php?day=${encodeURIComponent(pressedDay)}`);
+        };
+    });
+    
 });

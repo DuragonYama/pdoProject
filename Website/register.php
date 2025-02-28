@@ -19,6 +19,8 @@
     <title>Register</title>
     <link rel="stylesheet" href="../Css/register.css">
     <link rel="stylesheet" href="../Css/basic.css">
+    <link rel="stylesheet" href="../Css/font.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <?php if (isset($notification)) {echo $notification;} ?>
