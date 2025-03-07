@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Planner</title>
     <link rel="stylesheet" href="../Css/calendar.css">
-    <link rel="stylesheet" href="../Css/indexWeekly.css">
     <link rel="stylesheet" href="../Css/font.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
