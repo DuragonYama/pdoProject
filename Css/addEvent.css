@@ -1,0 +1,57 @@
+.addEvent {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: 100vh;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.addEvent-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.addEvent h2 {
+    margin-bottom: 10px;
+}
+
+.addEvent label {
+    margin-top: 10px;
+}
+
+.addEvent input,
+.addEvent textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.addEvent button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#saveEvent {
+    background-color: #4285f4;
+    color: white;
+}
+
+#closeEvent {
+    background-color: #f44336;
+    color: white;
+}
+
+.addEvent.open {
+    right: 0;
+}

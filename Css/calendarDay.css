@@ -1,29 +1,25 @@
-/* Global body styles */
 body {
     display: flex;
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f5f7fb; /* Soft background color */
-    color: #333; /* Darker text for readability */
+    background-color: #f5f7fb; 
+    color: #333; 
+    overflow: hidden;
 }
-
-/* Sidebar */
 .sidebar {
     width: 250px;
     background-color: #4285f4;
     color: white;
     padding: 20px;
     height: 110vh;
-    border-right: 2px solid #ddd; /* Subtle border */
+    border-right: 2px solid #ddd;
 }
-
 .sidebar h1 {
     margin: 0;
     font-size: 26px;
     margin-bottom: 20px;
     font-weight: bold;
 }
-
 .sidebar ul {
     list-style: none;
     padding: 0;
@@ -32,46 +28,38 @@ body {
 .sidebar ul li {
     margin: 15px 0;
 }
-
 .sidebar ul li a {
     color: white;
     text-decoration: none;
     font-size: 18px;
     display: block;
 }
-
 .sidebar ul li a:hover {
     color: #ffeb3b;
-    background-color: rgba(255, 255, 255, 0.1); /* Slight hover effect */
+    background-color: rgba(255, 255, 255, 0.1);
     padding-left: 10px;
     border-radius: 5px;
 }
-
-/* Main Content */
 .main-content {
     flex-grow: 1;
     padding: 30px;
     overflow-y: auto;
-    background-color: white; /* Clean background for the content */
-    border-radius: 10px; /* Soft edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow around content */
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
-/* Header */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
     padding: 10px 0;
-    border-bottom: 2px solid #eee; /* Soft bottom border */
+    border-bottom: 2px solid #eee;
 }
-
 .header h2 {
     font-size: 28px;
     color: #555;
 }
-
 .header button {
     padding: 10px 20px;
     background-color: #4285f4;
@@ -82,44 +70,46 @@ body {
     font-size: 16px;
     transition: background-color 0.3s ease;
 }
-
 .header button:hover {
     background-color: #055fef;
 }
-
-/* Day Schedule */
 .day-schedule {
     display: flex;
     flex-direction: column;
-    border-left: solid 1px #ddd;
-    border-top: solid 1px #ddd;
+    border-left: solid 2px #ddd; 
     border-radius: 8px;
-    overflow: hidden;
+    height: 70vh;
+    overflow: scroll;
+    padding-left: 20px;
 }
-
-/* Hour Block */
 .hour {
     display: flex;
-    justify-content: flex-start;
     align-items: center;
+    position: relative;
     padding: 16px 20px;
-    border-bottom: 1px solid #f1f1f1;
     cursor: pointer;
     background-color: #fafbfc;
     transition: background-color 0.2s ease;
 }
-
 .hour:hover {
     background-color: #f1f3f4;
 }
-
 .hour span {
     font-size: 16px;
     color: #333;
     margin-right: 20px;
 }
-
-/* Event Box */
+.hour::before {
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background-color: #4285f4; 
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
 .hour .event {
     background-color: #4285f4;
     color: white;
@@ -129,14 +119,10 @@ body {
     margin-top: 8px;
     width: 100%;
 }
-
-/* Event Styling on Hover */
 .hour .event:hover {
     background-color: #3367d6;
     cursor: pointer;
 }
-
-/* Responsive Adjustments */
 @media (max-width: 768px) {
     .sidebar {
         width: 200px;
@@ -154,3 +140,25 @@ body {
         padding: 8px 15px;
     }
 }
+.box1, .box2, .box3, .box4 {
+    padding: 1vh;
+    height: auto;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+.box1 {
+    background-color: rgb(113, 179, 240);
+}
+.box2 {
+    background-color: rgb(251, 251, 90);
+    margin-left: 10px;
+}
+.box3 {
+    background-color: rgb(90, 251, 152);
+    margin-left: 10px;
+}
+.box4 {
+    background-color: rgb(251, 165, 90);
+    margin-left: 10px;
+}   
+

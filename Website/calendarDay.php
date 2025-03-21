@@ -6,6 +6,7 @@
     <title>Events for <span id="day"></span></title>
     <link rel="stylesheet" href="../Css/calendarDay.css">
     <link rel="stylesheet" href="../Css/font.css">
+    <link rel="stylesheet" href="../Css/addEvent.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -26,7 +27,7 @@
             <button id="addEventBtn">Add Event</button>
         </div>
         <div class="day-schedule">
-            <div class="hour" id="hour-0"><span>12:00 AM</span></div>
+            <div class="hour" id="hour-0"><span>12:00 AM</span><div class="box1">Event 1: 25th February <br> aaaaaaaaaaaaaaaaaaaaaaa <br> aaaaaaaaaaaaaaaa <br> </div><div class="box2">Event 1: 25th February <br> aaaaaaaaaaaaaaaaaaaaaaa <br> aaaaaaaaaaaaaaaa <br> </div><div class="box3">Event 1: 25th February <br> aaaaaaaaaaaaaaaaaaaaaaa <br> aaaaaaaaaaaaaaaa <br> </div><div class="box4">Event 1: 25th February <br> aaaaaaaaaaaaaaaaaaaaaaa <br> aaaaaaaaaaaaaaaa <br> </div></div>
             <div class="hour" id="hour-1"><span>1:00 AM</span></div>
             <div class="hour" id="hour-2"><span>2:00 AM</span></div>
             <div class="hour" id="hour-3"><span>3:00 AM</span></div>
@@ -52,7 +53,25 @@
             <div class="hour" id="hour-23"><span>11:00 PM</span></div>
         </div>
     </div>
+    <div class="addEvent">
+        <div class="addEvent-container">
+            <h2>Add Event</h2>
+            <label for="eventTitle">Title:</label>
+            <input type="text" id="eventTitle" placeholder="Enter event title">
 
+            <label for="eventDate">Date:</label>
+            <input type="date" id="eventDate">
+
+            <label for="eventTime">Time:</label>
+            <input type="time" id="eventTime">
+
+            <label for="eventDescription">Description:</label>
+            <textarea id="eventDescription" placeholder="Enter event description"></textarea>
+
+            <button id="saveEvent">Save</button>
+            <button id="closeEvent">Cancel</button>
+        </div>
+    </div>
     <script src="../Scripts/calendarDay.js"></script>
 </body>
 </html>
