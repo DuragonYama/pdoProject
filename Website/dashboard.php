@@ -1,3 +1,11 @@
+<?php 
+    require "../Database/user.php";
+    session_start();
+
+    if (isset($_POST['knop'])) {
+        $User->saveTask($_POST['task']);
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,30 +28,28 @@
             </ul>
         </nav>
     </div>
+    
     <div class="main-content">
         <div class="header">
             <h2>Welcome to Your Dashboard</h2>
-            <button>Add Task</button>
+            <button id="openSidebar">Add Task</button>
         </div>
 
         <div class="dashboard-cards">
             <div class="card">
                 <h3>Upcoming Tasks</h3>
                 <ul>
-                    <li>Task 1: Due on 23rd February</li>
-                    <li>Task 2: Due on 28th February</li>
-                    <li>Task 3: Due on 1st March</li>
+                    <?php $User->tasksOppakkenDashboard(); ?>
                 </ul>
-                <a href="tasks.php">View All Tasks</a>
+                <a href="tasks.php">Edit Tasks</a>
             </div>
 
             <div class="card">
                 <h3>Upcoming Events</h3>
                 <ul>
-                    <li>Event 1: 25th February</li>
-                    <li>Event 2: 5th March</li>
+                    <?php $User->eventsOppakkenDashboard(); ?>
                 </ul>
-                <a href="index.php">View Calendar</a>
+                <a href="calendar.php">View Calendar</a>
             </div>
 
             <div class="card">
@@ -57,6 +63,23 @@
         </div>
     </div>
 
-    <script src="../Scripts/date.js"></script>
+    <div id="taskSidebar" class="task-sidebar">
+        <button id="closeSidebar" class="button">&times;</button>
+        <h3>Add New Task</h3>
+        <form method="POST">
+            <input type="text" placeholder="Task Name" name="task" required>
+            <button type="submit" name="knop">Add Task</button>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById('openSidebar').addEventListener('click', function() {
+            document.getElementById('taskSidebar').classList.add('active');
+        });
+        
+        document.getElementById('closeSidebar').addEventListener('click', function() {
+            document.getElementById('taskSidebar').classList.remove('active');
+        });
+    </script>
 </body>
 </html>

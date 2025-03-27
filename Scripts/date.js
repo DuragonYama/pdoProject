@@ -16,11 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const renderCalendar = () => {
         monthYear.textContent = `${monthNames[currentMonth]} ${currentYear}`;
-
         calendar.innerHTML = "";
 
         const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
         const firstDay = new Date(currentYear, currentMonth, 1).getDay();
         const offset = firstDay === 0 ? 6 : firstDay - 1;
 
@@ -40,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             calendar.appendChild(dateDiv);
         }
+        pickUpDays();
     };
 
     renderCalendar();
@@ -51,7 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             currentMonth--;
         }
-        renderCalendar(); 
+        renderCalendar();
+        pickUpDays();
     };
 
     nextMonth.onclick = function() {
@@ -62,15 +62,40 @@ document.addEventListener("DOMContentLoaded", () => {
             currentMonth++;
         }
         renderCalendar();
+        pickUpDays();
     };
 
-    let days = document.querySelectorAll(".date")
+    function pickUpDays() {
+        let days = document.querySelectorAll(".date");
     
-    days.forEach(day => {
-        day.onclick = function() {
-            let pressedDay = day.textContent;
-            location.replace(`../Website/calendarDay.php?day=${encodeURIComponent(pressedDay)}`);
-        };
-    });
+        let [monthText, year] = monthYear.textContent.split(" ");
+        let month = 0;
     
+        if (monthText === "January") month = 1;
+        else if (monthText === "February") month = 2;
+        else if (monthText === "March") month = 3;
+        else if (monthText === "April") month = 4;
+        else if (monthText === "May") month = 5;
+        else if (monthText === "June") month = 6;
+        else if (monthText === "July") month = 7;
+        else if (monthText === "August") month = 8;
+        else if (monthText === "September") month = 9;
+        else if (monthText === "October") month = 10;
+        else if (monthText === "November") month = 11;
+        else if (monthText === "December") month = 12;
+    
+        console.log(`Extracted Month: ${month}, Year: ${year}`);
+    
+        days.forEach(day => {
+            day.onclick = function() {
+                let pressedDay = day.textContent;
+                console.log(`Clicked on Day: ${pressedDay}, Month: ${month}, Year: ${year}`);
+    
+                location.replace(`../Website/calendarDay.php?day=${encodeURIComponent(pressedDay)}&month=${encodeURIComponent(month)}&year=${encodeURIComponent(year)}`);
+            };
+        });
+    }
+    
+
+    pickUpDays();
 });

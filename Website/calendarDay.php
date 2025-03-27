@@ -1,3 +1,22 @@
+<?php
+
+    require "../Database/user.php";
+    session_start();
+
+    $day = isset($_GET['day']) ? $_GET['day'] : null;
+    $month = isset($_GET['month']) ? $_GET['month'] : null;
+    $year = isset($_GET['year']) ? $_GET['year'] : null;
+
+    $events = $User->eventsOppaken($day, $month, $year);
+
+    if (isset($_POST['button'])) {
+        $title = $_POST['title'];
+        $event_time = $_POST['tijd'];
+        $description = $_POST['description'];
+
+        $User->saveEvent($day, $month, $year, $title, $event_time, $description);
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,50 +46,89 @@
             <button id="addEventBtn">Add Event</button>
         </div>
         <div class="day-schedule">
-            <div class="hour" id="hour-0"><span>12:00 AM</span><div class="box1">Event 1: 25th February <br> aaaaaaaaaaaaaaaaaaaaaaa <br> aaaaaaaaaaaaaaaa <br> </div><div class="box2">Event 1: 25th February <br> aaaaaaaaaaaaaaaaaaaaaaa <br> aaaaaaaaaaaaaaaa <br> </div><div class="box3">Event 1: 25th February <br> aaaaaaaaaaaaaaaaaaaaaaa <br> aaaaaaaaaaaaaaaa <br> </div><div class="box4">Event 1: 25th February <br> aaaaaaaaaaaaaaaaaaaaaaa <br> aaaaaaaaaaaaaaaa <br> </div></div>
-            <div class="hour" id="hour-1"><span>1:00 AM</span></div>
-            <div class="hour" id="hour-2"><span>2:00 AM</span></div>
-            <div class="hour" id="hour-3"><span>3:00 AM</span></div>
-            <div class="hour" id="hour-4"><span>4:00 AM</span></div>
-            <div class="hour" id="hour-5"><span>5:00 AM</span></div>
-            <div class="hour" id="hour-6"><span>6:00 AM</span></div>
-            <div class="hour" id="hour-7"><span>7:00 AM</span></div>
-            <div class="hour" id="hour-8"><span>8:00 AM</span></div>
-            <div class="hour" id="hour-9"><span>9:00 AM</span></div>
-            <div class="hour" id="hour-10"><span>10:00 AM</span></div>
-            <div class="hour" id="hour-11"><span>11:00 AM</span></div>
-            <div class="hour" id="hour-12"><span>12:00 PM</span></div>
-            <div class="hour" id="hour-13"><span>1:00 PM</span></div>
-            <div class="hour" id="hour-14"><span>2:00 PM</span></div>
-            <div class="hour" id="hour-15"><span>3:00 PM</span></div>
-            <div class="hour" id="hour-16"><span>4:00 PM</span></div>
-            <div class="hour" id="hour-17"><span>5:00 PM</span></div>
-            <div class="hour" id="hour-18"><span>6:00 PM</span></div>
-            <div class="hour" id="hour-19"><span>7:00 PM</span></div>
-            <div class="hour" id="hour-20"><span>8:00 PM</span></div>
-            <div class="hour" id="hour-21"><span>9:00 PM</span></div>
-            <div class="hour" id="hour-22"><span>10:00 PM</span></div>
-            <div class="hour" id="hour-23"><span>11:00 PM</span></div>
+            <?php
+            $counter = 0;
+            $REALcounter = 0;
+
+            for ($i = 0; $i < 24; $i++) {
+                $hour = str_pad($i, 2, '0', STR_PAD_LEFT);
+                echo "<div class='hour' id='hour-$hour'><span>" . date('h:i A', strtotime("$hour:00")) . "</span>";
+            
+                foreach ($events as $event) {
+                    $eventHour = substr($event['event_time'], 0, 2);
+                    if ($eventHour == $hour) {
+                        $counter += 1;
+                        $REALcounter += 1;
+                        if ($counter >= 5) {
+                            $counter = 1;
+                            echo "<div class='event-box box{$counter}'>
+                            <div class='event-header'>
+                            <span class='event-title'>Event {$REALcounter}: {$event['title']}</span>
+                            </div>
+                            <div class='event-description'>
+                            <p>{$event['description']}</p>
+                            </div>
+                        </div>";
+                        } else {
+                            echo "<div class='event-box box{$counter}'>
+                            <div class='event-header'>
+                            <span class='event-title'>Event {$REALcounter}: {$event['title']}</span>
+                            </div>
+                            <div class='event-description'>
+                            <p>{$event['description']}</p>
+                            </div>
+                        </div>";
+                        }
+                    }
+                }
+                echo "</div>";
+            }
+
+            ?>
         </div>
     </div>
     <div class="addEvent">
-        <div class="addEvent-container">
-            <h2>Add Event</h2>
-            <label for="eventTitle">Title:</label>
-            <input type="text" id="eventTitle" placeholder="Enter event title">
+        <form method="POST">
+    <div class="addEvent-container">
+        <h2>Add Event</h2>
+        <label for="eventTitle">Title:</label>
+        <input type="text" id="eventTitle" name="title" placeholder="Enter event title">
 
-            <label for="eventDate">Date:</label>
-            <input type="date" id="eventDate">
+        <label for="eventTime">Time:</label>
+        <select id="eventTime" name="tijd">
+            <option value="00:00">12:00 AM</option>
+            <option value="01:00">1:00 AM</option>
+            <option value="02:00">2:00 AM</option>
+            <option value="03:00">3:00 AM</option>
+            <option value="04:00">4:00 AM</option>
+            <option value="05:00">5:00 AM</option>
+            <option value="06:00">6:00 AM</option>
+            <option value="07:00">7:00 AM</option>
+            <option value="08:00">8:00 AM</option>
+            <option value="09:00">9:00 AM</option>
+            <option value="10:00">10:00 AM</option>
+            <option value="11:00">11:00 AM</option>
+            <option value="12:00">12:00 PM</option>
+            <option value="13:00">1:00 PM</option>
+            <option value="14:00">2:00 PM</option>
+            <option value="15:00">3:00 PM</option>
+            <option value="16:00">4:00 PM</option>
+            <option value="17:00">5:00 PM</option>
+            <option value="18:00">6:00 PM</option>
+            <option value="19:00">7:00 PM</option>
+            <option value="20:00">8:00 PM</option>
+            <option value="21:00">9:00 PM</option>
+            <option value="22:00">10:00 PM</option>
+            <option value="23:00">11:00 PM</option>
+        </select>
 
-            <label for="eventTime">Time:</label>
-            <input type="time" id="eventTime">
+        <label for="eventDescription">Description:</label>
+        <textarea id="eventDescription" name="description" placeholder="Enter event description"></textarea>
 
-            <label for="eventDescription">Description:</label>
-            <textarea id="eventDescription" placeholder="Enter event description"></textarea>
-
-            <button id="saveEvent">Save</button>
-            <button id="closeEvent">Cancel</button>
-        </div>
+        <button id="saveEvent" name="button">Save</button>
+        <button id="closeEvent">Cancel</button>
+    </div>
+    </form>
     </div>
     <script src="../Scripts/calendarDay.js"></script>
 </body>

@@ -34,7 +34,7 @@ class User
     public function loginUser($email, $password) {
         session_start();
 
-        $sql = "SELECT password FROM user WHERE email = :email";
+        $sql = "SELECT id, password FROM user WHERE email = :email";
         $stored_info = $this->pdo->run($sql, ["email" => $email])->fetch();
 
         if (!$stored_info) {
@@ -44,8 +44,98 @@ class User
 
         if (password_verify($password, $stored_info['password'])) {
             $_SESSION['email'] = $email;
+            $_SESSION['id'] = $stored_info['id'];
         }
-    } 
+    }
+    
+    public function saveEvent($day, $month, $year, $title, $event_time, $description) {
+
+        if (!isset($_SESSION['id'])) {
+            echo "User not logged in!";
+            return;
+        }
+    
+        $sql = "INSERT INTO events (user_id, day, month, year, title, event_time, description) 
+                VALUES (:user_id, :day, :month, :year, :title, :event_time, :description)";
+        
+        $this->pdo->run($sql, [
+            "user_id" => $_SESSION['id'],
+            "day" => $day,
+            "month" => $month,
+            "year" => $year,
+            "title" => $title,
+            "event_time" => $event_time,
+            "description" => $description
+        ]);
+    }
+
+    public function saveTask($task) {
+        if (!isset($_SESSION['id'])) {
+            return;
+        }
+
+        $sql = "INSERT INTO tasks (task, user_id)
+        VALUES (:task, :user_id)";
+
+        $this->pdo->run($sql, [
+            "task" => $task, 
+            "user_id" => $_SESSION['id']
+        ]);
+    }
+
+    public function eventsOppaken($day, $month, $year) {
+        $events = [];
+    
+        if ($day && $month && $year) {
+            $sql = "SELECT title, event_time, description 
+                    FROM events 
+                    WHERE user_id = :user_id 
+                    AND day = :day 
+                    AND month = :month 
+                    AND year = :year 
+                    ORDER BY event_time";
+    
+            $events = $this->pdo->run($sql, [
+                "user_id" => $_SESSION['id'],
+                "day" => $day,
+                "month" => $month,
+                "year" => $year
+            ])->fetchAll();
+        }
+    
+        return $events;
+    }
+    
+    public function eventsOppakkenDashboard() {
+        $nummer = 0;
+        $stmt = $this->pdo->run("SELECT title, description, event_time, day, month, year 
+            FROM events 
+            WHERE user_id = :user_id 
+            ORDER BY year, month, day, event_time ASC", 
+            ['user_id' => $_SESSION['id']]
+        );
+    
+        while ($event = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $nummer += 1;
+            $eventDate = "{$event['day']}-{$event['month']}-{$event['year']}";
+            $formattedTime = date("H:i", strtotime($event['event_time']));
+            echo "<li>Event {$nummer}: <strong>{$event['title']}</strong> ({$eventDate} om {$formattedTime})</li>";
+        }
+    }
+
+    public function tasksOppakkenDashboard() {
+        $nummer = 0;
+        $stmt = $this->pdo->run("SELECT task, updated_at, completed
+        FROM tasks
+        WHERE user_id = :user_id",
+        ['user_id' => $_SESSION['id']]);
+
+        while ($tasks = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $nummer += 1;
+            echo "<li>Task {$nummer}: <strong>{$tasks['task']}</strong></li>";
+        }
+    }
+
 }
 
 $User = new User();

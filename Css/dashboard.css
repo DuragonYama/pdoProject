@@ -141,3 +141,65 @@ body {
     }
 }
 
+.task-sidebar {
+    position: fixed;
+    top: 0;
+    right: -400px; /* Hidden initially */
+    width: 350px;
+    height: 100vh;
+    background-color: #ffffff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: right 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-sidebar.active {
+    right: 0;
+}
+
+/* Close Button (Fixing Width Issue) */
+.task-sidebar .close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: auto; /* Prevents it from becoming too wide */
+    padding: 5px; /* Keeps a nice click area */
+}
+
+/* Input fields */
+.task-sidebar form {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-sidebar input,
+.task-sidebar textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Submit Button (Preventing It from Being Too Low) */
+.task-sidebar button[type="submit"] {
+    margin-top: 20px; /* Instead of auto, keeps it close to form */
+    padding: 10px;
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button {
+    width: 25px;
+    margin-left: 45vh;
+}
