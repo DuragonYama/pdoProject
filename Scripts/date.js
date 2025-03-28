@@ -14,6 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
         "July", "August", "September", "October", "November", "December"
     ];
 
+    const dayNames = [
+        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+    ];
+
     const renderCalendar = () => {
         monthYear.textContent = `${monthNames[currentMonth]} ${currentYear}`;
         calendar.innerHTML = "";
@@ -67,35 +71,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function pickUpDays() {
         let days = document.querySelectorAll(".date");
-    
+
         let [monthText, year] = monthYear.textContent.split(" ");
-        let month = 0;
-    
-        if (monthText === "January") month = 1;
-        else if (monthText === "February") month = 2;
-        else if (monthText === "March") month = 3;
-        else if (monthText === "April") month = 4;
-        else if (monthText === "May") month = 5;
-        else if (monthText === "June") month = 6;
-        else if (monthText === "July") month = 7;
-        else if (monthText === "August") month = 8;
-        else if (monthText === "September") month = 9;
-        else if (monthText === "October") month = 10;
-        else if (monthText === "November") month = 11;
-        else if (monthText === "December") month = 12;
-    
+        let month = monthNames.indexOf(monthText);
+
         console.log(`Extracted Month: ${month}, Year: ${year}`);
-    
+
         days.forEach(day => {
             day.onclick = function() {
                 let pressedDay = day.textContent;
-                console.log(`Clicked on Day: ${pressedDay}, Month: ${month}, Year: ${year}`);
-    
-                location.replace(`../Website/calendarDay.php?day=${encodeURIComponent(pressedDay)}&month=${encodeURIComponent(month)}&year=${encodeURIComponent(year)}`);
+
+                let dateObj = new Date(currentYear, month, pressedDay);
+                let dayOfWeek = dayNames[dateObj.getDay()];
+
+                console.log(`Clicked on Day: ${pressedDay}, Month: ${month}, Year: ${year}, Day of Week: ${dayOfWeek}`);
+
+                location.replace(`../Website/calendarDay.php?day=${encodeURIComponent(pressedDay)}&month=${encodeURIComponent(month)}&year=${encodeURIComponent(year)}&dayOfWeek=${encodeURIComponent(dayOfWeek)}`);
             };
         });
     }
-    
 
     pickUpDays();
 });

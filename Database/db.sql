@@ -2,6 +2,8 @@ create database taskplanner;
 
 use taskplanner;
 
+SET GLOBAL event_scheduler = ON;
+
 CREATE TABLE user (
     id INT PRIMARY KEY AUTO_INCREMENT,
     firstname VARCHAR(255) NOT NULL,
@@ -35,10 +37,11 @@ create table tasks (
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
-
 select * from user;
 select * from events;
 select * from tasks;
 
 drop table events;
 drop table tasks;
+
+drop database taskplanner;

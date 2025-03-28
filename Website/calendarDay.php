@@ -15,6 +15,8 @@
         $description = $_POST['description'];
 
         $User->saveEvent($day, $month, $year, $title, $event_time, $description);
+
+        header("Location: " . $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING']);
     }
 ?>
 <!DOCTYPE html>
@@ -36,13 +38,12 @@
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="calendar.php">Calendar</a></li>
                 <li><a href="tasks.php">Tasks</a></li>
-                <li><a href="settings.php">Settings</a></li>
             </ul>
         </nav>
     </div>
     <div class="main-content">
         <div class="header">
-            <h2>Events for <span id="day"></span></h2>
+            <h2>Events for <span id="day"><?php echo $_GET['dayOfWeek']; ?></span></h2>
             <button id="addEventBtn">Add Event</button>
         </div>
         <div class="day-schedule">

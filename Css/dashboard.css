@@ -11,15 +11,15 @@ body {
     background-color: #4285f4;
     color: white;
     padding: 20px;
-    height: 100vh;
+    height: 110vh;
+    border-right: 2px solid #ddd;
 }
-
 .sidebar h1 {
     margin: 0;
-    font-size: 24px;
+    font-size: 26px;
     margin-bottom: 20px;
+    font-weight: bold;
 }
-
 .sidebar ul {
     list-style: none;
     padding: 0;
@@ -28,16 +28,17 @@ body {
 .sidebar ul li {
     margin: 15px 0;
 }
-
 .sidebar ul li a {
     color: white;
     text-decoration: none;
     font-size: 18px;
-    transition: color 0.3s;
+    display: block;
 }
-
 .sidebar ul li a:hover {
     color: #ffeb3b;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding-left: 10px;
+    border-radius: 5px;
 }
 
 .main-content {

@@ -13,11 +13,15 @@ class db_connection {
         }
     }
 
-    public function run($sql, $placeholder = null) {
+    public function run($sql, $placeholders = null) {
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($placeholder);
+        if ($placeholders) {
+            $stmt->execute($placeholders);
+        } else {
+            $stmt->execute();
+        }
         return $stmt;
-    }
+    }    
 }
 
 $pdo = new db_connection();

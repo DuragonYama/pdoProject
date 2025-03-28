@@ -16,7 +16,6 @@
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="calendar.php">Calendar</a></li>
                 <li><a href="tasks.php">Tasks</a></li>
-                <li><a href="settings.php">Settings</a></li>
             </ul>
         </nav>
     </div>
@@ -27,7 +26,6 @@
             <button id="previousMonth"><</button> &nbsp;
             <button id="nextMonth">></button>
         </div>
-            <button>Add Event</button>
         </div>
         <div class="containerDays">
             <div class="day">Mon</div>

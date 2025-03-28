@@ -24,7 +24,6 @@
                 <li><a href="dashboard.php">Dashboard</a></li>
                 <li><a href="calendar.php">Calendar</a></li>
                 <li><a href="tasks.php">Tasks</a></li>
-                <li><a href="settings.php">Settings</a></li>
             </ul>
         </nav>
     </div>
@@ -45,7 +44,7 @@
             </div>
 
             <div class="card">
-                <h3>Upcoming Events</h3>
+                <h3>Events</h3>
                 <ul>
                     <?php $User->eventsOppakkenDashboard(); ?>
                 </ul>
@@ -53,12 +52,13 @@
             </div>
 
             <div class="card">
-                <h3>Recent Activity</h3>
+                <h3>Statistics</h3>
                 <ul>
-                    <li>Added Task 1 on 20th February</li>
-                    <li>Completed Task 2 on 19th February</li>
+                    <li>Total Tasks: <?php echo $User->getTotalTasks(); ?></li>
+                    <li>Completed Tasks: <?php echo $User->getCompletedTasks(); ?></li>
+                    <li>Pending Tasks: <?php echo $User->getPendingTasks(); ?></li>
                 </ul>
-                <a href="tasks.php">See More Activity</a>
+                <a href="tasks.php">See All Tasks</a>
             </div>
         </div>
     </div>

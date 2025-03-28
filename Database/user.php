@@ -131,11 +131,54 @@ class User
         ['user_id' => $_SESSION['id']]);
 
         while ($tasks = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $nummer += 1;
-            echo "<li>Task {$nummer}: <strong>{$tasks['task']}</strong></li>";
+            if ($tasks['completed'] == 0) {
+                $nummer += 1;
+                echo "<li>Task {$nummer}: <strong>{$tasks['task']}</strong></li>";
+            }
         }
     }
 
+    public function getTasksByUser($userId) {
+        $sql = "SELECT * FROM tasks WHERE user_id = :user_id";
+        return $this->pdo->run($sql, ["user_id" => $userId])->fetchAll();
+    }
+    
+    public function getTaskById($taskId) {
+        $sql = "SELECT * FROM tasks WHERE id = :task_id";
+        return $this->pdo->run($sql, ["task_id" => $taskId])->fetch();
+    }
+    
+    public function updateTask($taskId, $name, $completed) {
+        $sql = "UPDATE tasks SET task = :task, completed = :completed, updated_at = CURRENT_TIMESTAMP WHERE id = :task_id";
+        $this->pdo->run($sql, [
+            "task" => $name,
+            "completed" => $completed,
+            "task_id" => $taskId
+        ]);
+    }
+
+    public function deleteTask($taskId) {
+        $sql = "DELETE FROM tasks WHERE id = :task_id";
+        $this->pdo->run($sql, ["task_id" => $taskId]);
+    }
+
+    public function getTotalTasks() {
+        $query = "SELECT COUNT(*) FROM tasks WHERE user_id = ?";
+        $stmt = $this->pdo->run($query, [$_SESSION['id']]);
+        return $stmt->fetchColumn();
+    }
+    
+    public function getCompletedTasks() {
+        $query = "SELECT COUNT(*) FROM tasks WHERE user_id = ? AND completed = 1";
+        $stmt = $this->pdo->run($query, [$_SESSION['id']]);
+        return $stmt->fetchColumn();
+    }
+    
+    public function getPendingTasks() {
+        $query = "SELECT COUNT(*) FROM tasks WHERE user_id = ? AND completed = 0";
+        $stmt = $this->pdo->run($query, [$_SESSION['id']]);
+        return $stmt->fetchColumn();
+    }
 }
 
 $User = new User();
